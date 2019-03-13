@@ -1,0 +1,27 @@
+from quspin.operators import hamiltonian
+from quspin.basis import spin_basis_1d
+import numpy as np
+
+tau=7.0
+J=1
+Omega=2*np.pi
+T=2*np.pi/Omega
+
+def drive(t,Omega):
+	return np.cos(Omega*t)
+drive_args=[Omega]
+
+S_str="{:d}".format(J)
+basis=spin_basis_1d(L=1,S=S_str)
+
+dynamic=[['z',[[1.0,0]],drive,drive_args] ]
+
+no_checks=dict(check_herm=False,check_symm=False,check_pcon=False)
+S_z_dyn=hamiltonian([],dynamic,basis=basis,dtype=np.complex128, **no_checks)
+
+print(S_z_dyn.toarray(time=0))
+print(tau/(2*J+1))
+H = tau/(2*J+1)*S_z_dyn
+print(S_z_dyn.toarray(time=0))
+
+
