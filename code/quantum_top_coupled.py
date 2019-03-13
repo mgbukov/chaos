@@ -14,6 +14,12 @@ from quspin.tools.measurements import obs_vs_time
 from quspin.tools.evolution import evolve
 from quspin.tools.Floquet import Floquet_t_vec
 
+#from quspin.operators._oputils import matvec as _matvec
+from quspin.operators._oputils import _get_matvec_function
+from cpp_funcs import c_cross, c_dot
+
+from numba import njit
+
 import numpy as np
 import scipy as sp
 import matplotlib.pyplot as plt
@@ -33,6 +39,7 @@ np.random.seed(0)
 
 J=1 # spin value
 hbar=1.0/J
+hbar_inv=1.0/hbar
 gamma=1.00
 tau=0.0 #7.0
 alpha=1.5
@@ -62,51 +69,87 @@ S_z=hamiltonian([['z',[[hbar, 0]] ]], [], basis=basis,dtype=np.complex128, **no_
 #H = 1.0/(2*J+1) * ( alpha*S_x + tau/(2*J+1)*S_z_dyn )
 H = alpha*S_x + tau*S_z_dyn 
 
-S_x_mat=S_x.toarray()
-S_y_mat=S_y.toarray()
-S_z_mat=S_z.toarray()
 
+S_x_mat=S_x.tocsr()
+S_y_mat=S_y.tocsr()
+S_z_mat=S_z.tocsr()
+_static_matvec=_get_matvec_function(S_y_mat)
+	
 
-def expectation(psi_1,psi_2):
-	return np.array( [np.einsum('i...,ij,j...->...',psi_1.conj(),S_x_mat,psi_2),np.einsum('i...,ij,j...->...',psi_1.conj(),S_y_mat,psi_2),np.einsum('i...,ij,j...->...',psi_1.conj(),S_z_mat,psi_2)] )
-	#return np.array( [S_x.expt_value(psi), S_y.expt_value(psi), S_z.expt_value(psi)] )
+def expectation(psi_1,psi_2,a,out=None,V_out=None):
+	
+	psi_1_conj=psi_1.conj()
 
-def cross(psi_1,psi_2):
-	return np.array( [psi_1[1]*psi_2[2] - psi_1[2]*psi_2[1], psi_1[2]*psi_2[0] - psi_1[0]*psi_2[2], psi_1[0]*psi_2[1] - psi_1[1]*psi_2[0] ])
-	#return np.cross(psi_1,psi_2)
+	_static_matvec(S_x_mat, psi_2, out=V_out, a=+1.0, overwrite_out=True)
+	#out[0]=psi_1_conj.dot(V_out)
+	out[0]=c_dot(psi_1_conj,V_out).real
 
-def ext_field_op(S):
-	return S[0]*S_x_mat + S[1]*S_y_mat + S[2]*S_z_mat
+	_static_matvec(S_y_mat, psi_2, out=V_out, a=+1.0, overwrite_out=True)
+	#out[1]=psi_1_conj.dot(V_out)
+	out[1]=c_dot(psi_1_conj,V_out).real
 
+	_static_matvec(S_z_mat, psi_2, out=V_out, a=+1.0, overwrite_out=True)
+	#out[2]=psi_1_conj.dot(V_out)
+	out[2]=c_dot(psi_1_conj,V_out).real
+
+	out*=a
+
+#	return out
+	
+@njit
+def cross(v_1,v_2,out=None):
+	out[0]+=v_1[1]*v_2[2] - v_1[2]*v_2[1]
+	out[1]+=v_1[2]*v_2[0] - v_1[0]*v_2[2]
+	out[2]+=v_1[0]*v_2[1] - v_1[1]*v_2[0]
+
+#	return out
+
+def sigma_dot_S(V,V_out,S,a):
+
+	_static_matvec(S_x_mat, V, out=V_out, a=a*S[0], overwrite_out=False)
+	_static_matvec(S_y_mat, V, out=V_out, a=a*S[1], overwrite_out=False)
+	_static_matvec(S_z_mat, V, out=V_out, a=a*S[2], overwrite_out=False)
+
+#Ns_plus_3=basis.Ns+3
+#twice_Ns=2*basis.Ns
+#twice_Ns_plus_3=2*basis.Ns+3
 
 def EOM(t,V,Ns,gamma):
 
 	V_dot=np.zeros_like(V)
-
+	
 	# auxiliary variables
-	sigma_dot      = gamma*ext_field_op(V[Ns:Ns+3])
-	sigma_lin_dot  = gamma*ext_field_op(V[2*Ns+3:])
+	V_out=np.zeros(Ns,dtype=np.complex128)
+	sigma_expt=np.zeros(3,dtype=np.float64)
+	sigma_expt_lin=np.zeros(3,dtype=np.float64)
 
-	sigma_expt     = gamma*expectation(V[:Ns],V[:Ns])
-	sigma_expt_lin = 2.0*gamma*expectation(V[Ns+3:2*Ns+3],V[:Ns]).real
+	expectation(V[:Ns],V[:Ns]        ,     gamma,out=sigma_expt    ,V_out=V_out)
+	expectation(V[Ns+3:2*Ns+3],V[:Ns], 2.0*gamma,out=sigma_expt_lin,V_out=V_out)#.real
+
 	
 	# evolve quantum state vector
-	V_dot[:Ns] = 1.0/hbar*H._hamiltonian__SO(t,V[:Ns],V_dot[:Ns]) # -1j*H(t)*|psi>
+	V_dot[:Ns] = hbar_inv*H._hamiltonian__SO(t,V[:Ns],V_dot[:Ns]) # -1j*H(t)*|psi>
 	
 	# coupling term
-	V_dot[:Ns]     -= 1j/hbar*sigma_dot.dot(V[:Ns])
-	V_dot[Ns:Ns+3]  =    cross(sigma_expt,V[Ns:Ns+3])
-
+	#V_dot[:Ns]     -= 1j/hbar*sigma_dot.dot(V[:Ns])
+	sigma_dot_S(V[:Ns],V_dot[:Ns],V[Ns:Ns+3],-1j*gamma*hbar_inv)
+	#cross(sigma_expt,V[Ns:Ns+3],out=V_dot[Ns:Ns+3])
+	c_cross(sigma_expt,V[Ns:Ns+3],out=V_dot[Ns:Ns+3])
+	
 	# evolve linearization
-	V_dot[Ns+3:2*Ns+3]  = 1.0/hbar*H._hamiltonian__SO(t,V[Ns+3:2*Ns+3],V_dot[Ns+3:2*Ns+3]) # -1j*H(t)*|psi_lin>
+	V_dot[Ns+3:2*Ns+3]  = hbar_inv*H._hamiltonian__SO(t,V[Ns+3:2*Ns+3],V_dot[Ns+3:2*Ns+3]) # -1j*H(t)*|psi_lin>
 	
 	# coupling term
-	V_dot[Ns+3:2*Ns+3] -= 1j/hbar*sigma_dot.dot(V[Ns+3:2*Ns+3]) # S sigma |psi_lin>
-	V_dot[Ns+3:2*Ns+3] -= 1j/hbar*sigma_lin_dot.dot(V[:Ns]) # S_lin sigma |psi>
+	#V_dot[Ns+3:2*Ns+3] -= 1j/hbar*sigma_dot.dot(V[Ns+3:2*Ns+3]) # S sigma |psi_lin>
+	sigma_dot_S(V[Ns+3:2*Ns+3],V_dot[Ns+3:2*Ns+3],V[Ns:Ns+3],-1j*gamma*hbar_inv) # S sigma |psi_lin>
+	#V_dot[Ns+3:2*Ns+3] -= 1j/hbar*sigma_lin_dot.dot(V[:Ns]) # S_lin sigma |psi>
+	sigma_dot_S(V[:Ns],V_dot[Ns+3:2*Ns+3],V[2*Ns+3:],-1j*gamma*hbar_inv) # S_lin sigma |psi>
+	
+	#cross(sigma_expt,V[2*Ns+3:],out=V_dot[2*Ns+3:]) # <psi|sigma|psi> x S_lin
+	#cross(sigma_expt_lin,V[Ns:Ns+3],out=V_dot[2*Ns+3:]) # 2 Re <\delta psi|sigma|psi_lin> x S
 
-
-	V_dot[2*Ns+3:]  = cross(sigma_expt,V[2*Ns+3:]) # <psi|sigma|psi> x S_lin
-	V_dot[2*Ns+3:] += cross(sigma_expt_lin,V[Ns:Ns+3]) # 2 Re <\delta psi|sigma|psi_lin> x S
+	c_cross(sigma_expt,V[2*Ns+3:]    ,out=V_dot[2*Ns+3:]) # <psi|sigma|psi> x S_lin
+	c_cross(sigma_expt_lin,V[Ns:Ns+3],out=V_dot[2*Ns+3:]) # 2 Re <\delta psi|sigma|psi_lin> x S
 
 	return V_dot
 
@@ -117,7 +160,7 @@ psi_0=np.zeros(basis.Ns)
 psi_0[0]=1.0
 # rotate initial state
 theta=np.arctan(0.23/0.69)
-Uy=sp.linalg.expm(-1j/hbar*theta*S_y_mat)
+Uy=sp.linalg.expm(-1j*hbar_inv*theta*S_y_mat)
 psi_0=Uy.dot(psi_0)
 
 # classical initial state
@@ -139,19 +182,9 @@ S_aux_0[basis.Ns:] = np.ones(3)/np.sqrt(3)
 V_0=np.concatenate([S_0,S_aux_0])
 
 
-N_T=200
+N_T=200 #10 #200
 time=Floquet_t_vec(Omega,N_T)  #np.linspace(0.0,20.0*T,101)
 V_t=evolve(V_0,time[0],time,EOM,f_params=EOM_cont_args,iterate=True,atol=1E-12,rtol=1E-12)
-#psi_t_2=H.evolve(psi_0,time[0],time,iterate=False,atol=1E-12,rtol=1E-12)
-
-'''
-psi_t=V_t[:basis.Ns,:]
-S_t=V_t[basis.Ns:basis.Ns+3,:]
-psi_lin_t=V_t[basis.Ns+3:2*basis.Ns+3,:]
-S_lin_t=V_t[2*basis.Ns+3:,:]
-sigma_expt_t=expectation(psi_t)
-'''
-
 
 
 # calculate linear evolution
@@ -166,7 +199,7 @@ for j,V in enumerate(V_t):
 	S=V[:basis.Ns]
 
 	#lin=V[basis.Ns+3:2*basis.Ns+3] # V[2*basis.Ns+3:] #V[basis.Ns+3:] #
-	lin=2*expectation(V[basis.Ns+3:2*basis.Ns+3],V[:basis.Ns]).real
+	#lin=2*expectation(V[basis.Ns+3:2*basis.Ns+3],V[:basis.Ns]).real
 	#lin=np.outer(V[basis.Ns+3:2*basis.Ns+3], V[:basis.Ns].conj())
 	#lin += lin.conj().T
 	
@@ -180,8 +213,7 @@ for j,V in enumerate(V_t):
 		measure_times[0]=0.0
 		last_time=0.0
 	elif j%skip_steps==0: 
-		#n=np.linalg.norm(S_lin)
-		n=np.linalg.norm(lin)			
+		n=np.linalg.norm(S_lin)
 		#norm*=n
 		#lyap_exp[k] = np.log(norm) /(1.0*time[j])
 		lyap_exp[k] = (lyap_exp[k-1]*measure_times[k-1] + np.log(n) )/time[j]
@@ -193,7 +225,8 @@ for j,V in enumerate(V_t):
 
 		print(j, time.len, lyap_exp[k-1])
 
-		
+exit()
+
 plt.plot(measure_times/time.T,lyap_exp)
 plt.grid()
 plt.xlabel('$\\ell$',)
