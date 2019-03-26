@@ -1,5 +1,6 @@
 //#ifndef _CROSS_C_H
 //#define _CROSS_C_H
+#include "openmp.h"
 #include "complex_ops.h"
 #include <complex>
 using namespace std;
@@ -20,14 +21,19 @@ void c_cross_product(const double v_1[],
 
 
 std::complex<double> c_dot_product(const std::complex<double> v_1[],
-		     const std::complex<double> v_2[],
-		     const int N
+							     const std::complex<double> v_2[],
+							     const int N
 	)
 {	
 	std::complex<double> result=0;
-	for(int j=0;j<N;j++){
-		result+=v_1[j]*v_2[j];
+	#pragma omp parallel
+	{
+		#pragma omp for schedule(static) // constant load operation
+		for(int j=0;j<N;j++){
+			result+=std::conj(v_1[j])*v_2[j];
+		}
 	}
+	
 
 	return result;
 }

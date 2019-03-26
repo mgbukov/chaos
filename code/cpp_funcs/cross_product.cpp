@@ -1626,7 +1626,7 @@ static PyObject *__pyx_n_s_v1_ptr;
 static PyObject *__pyx_n_s_v2;
 static PyObject *__pyx_n_s_v2_ptr;
 static PyObject *__pyx_pf_9cpp_funcs_13cross_product_c_cross(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_v1, PyArrayObject *__pyx_v_v2, PyArrayObject *__pyx_v_out); /* proto */
-static PyObject *__pyx_pf_9cpp_funcs_13cross_product_2c_dot(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_v1, PyArrayObject *__pyx_v_v2); /* proto */
+static PyObject *__pyx_pf_9cpp_funcs_13cross_product_2c_dot(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_v1, PyArrayObject *__pyx_v_v2, int __pyx_v_N); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
 static PyObject *__pyx_tuple_;
@@ -1642,7 +1642,7 @@ static PyObject *__pyx_codeobj__9;
 static PyObject *__pyx_codeobj__11;
 /* Late includes */
 
-/* "cpp_funcs/cross_product.pyx":22
+/* "cpp_funcs/cross_product.pyx":19
  * 
  * 
  * def c_cross(np.ndarray v1, np.ndarray v2, np.ndarray out):             # <<<<<<<<<<<<<<
@@ -1685,17 +1685,17 @@ static PyObject *__pyx_pw_9cpp_funcs_13cross_product_1c_cross(PyObject *__pyx_se
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_v2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("c_cross", 1, 3, 3, 1); __PYX_ERR(0, 22, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("c_cross", 1, 3, 3, 1); __PYX_ERR(0, 19, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_out)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("c_cross", 1, 3, 3, 2); __PYX_ERR(0, 22, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("c_cross", 1, 3, 3, 2); __PYX_ERR(0, 19, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "c_cross") < 0)) __PYX_ERR(0, 22, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "c_cross") < 0)) __PYX_ERR(0, 19, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -1710,15 +1710,15 @@ static PyObject *__pyx_pw_9cpp_funcs_13cross_product_1c_cross(PyObject *__pyx_se
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("c_cross", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 22, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("c_cross", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 19, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("cpp_funcs.cross_product.c_cross", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_v1), __pyx_ptype_5numpy_ndarray, 1, "v1", 0))) __PYX_ERR(0, 22, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_v2), __pyx_ptype_5numpy_ndarray, 1, "v2", 0))) __PYX_ERR(0, 22, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_out), __pyx_ptype_5numpy_ndarray, 1, "out", 0))) __PYX_ERR(0, 22, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_v1), __pyx_ptype_5numpy_ndarray, 1, "v1", 0))) __PYX_ERR(0, 19, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_v2), __pyx_ptype_5numpy_ndarray, 1, "v2", 0))) __PYX_ERR(0, 19, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_out), __pyx_ptype_5numpy_ndarray, 1, "out", 0))) __PYX_ERR(0, 19, __pyx_L1_error)
   __pyx_r = __pyx_pf_9cpp_funcs_13cross_product_c_cross(__pyx_self, __pyx_v_v1, __pyx_v_v2, __pyx_v_out);
 
   /* function exit code */
@@ -1738,7 +1738,7 @@ static PyObject *__pyx_pf_9cpp_funcs_13cross_product_c_cross(CYTHON_UNUSED PyObj
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("c_cross", 0);
 
-  /* "cpp_funcs/cross_product.pyx":26
+  /* "cpp_funcs/cross_product.pyx":23
  * 	# cast pointers with angle brackets to <npy> to datatype
  * 
  * 	cdef void * v1_ptr=np.PyArray_DATA(v1)             # <<<<<<<<<<<<<<
@@ -1747,7 +1747,7 @@ static PyObject *__pyx_pf_9cpp_funcs_13cross_product_c_cross(CYTHON_UNUSED PyObj
  */
   __pyx_v_v1_ptr = PyArray_DATA(__pyx_v_v1);
 
-  /* "cpp_funcs/cross_product.pyx":27
+  /* "cpp_funcs/cross_product.pyx":24
  * 
  * 	cdef void * v1_ptr=np.PyArray_DATA(v1)
  * 	cdef void * v2_ptr=np.PyArray_DATA(v2)             # <<<<<<<<<<<<<<
@@ -1756,7 +1756,7 @@ static PyObject *__pyx_pf_9cpp_funcs_13cross_product_c_cross(CYTHON_UNUSED PyObj
  */
   __pyx_v_v2_ptr = PyArray_DATA(__pyx_v_v2);
 
-  /* "cpp_funcs/cross_product.pyx":28
+  /* "cpp_funcs/cross_product.pyx":25
  * 	cdef void * v1_ptr=np.PyArray_DATA(v1)
  * 	cdef void * v2_ptr=np.PyArray_DATA(v2)
  * 	cdef void * out_ptr=np.PyArray_DATA(out)             # <<<<<<<<<<<<<<
@@ -1765,7 +1765,7 @@ static PyObject *__pyx_pf_9cpp_funcs_13cross_product_c_cross(CYTHON_UNUSED PyObj
  */
   __pyx_v_out_ptr = PyArray_DATA(__pyx_v_out);
 
-  /* "cpp_funcs/cross_product.pyx":30
+  /* "cpp_funcs/cross_product.pyx":27
  * 	cdef void * out_ptr=np.PyArray_DATA(out)
  * 
  * 	c_cross_product(< const double *> v1_ptr, < const npy_cdouble_wrapper *> v2_ptr, < npy_cdouble_wrapper *> out_ptr)             # <<<<<<<<<<<<<<
@@ -1774,7 +1774,7 @@ static PyObject *__pyx_pf_9cpp_funcs_13cross_product_c_cross(CYTHON_UNUSED PyObj
  */
   c_cross_product(((double const *)__pyx_v_v1_ptr), ((npy_cdouble_wrapper const *)__pyx_v_v2_ptr), ((npy_cdouble_wrapper *)__pyx_v_out_ptr));
 
-  /* "cpp_funcs/cross_product.pyx":22
+  /* "cpp_funcs/cross_product.pyx":19
  * 
  * 
  * def c_cross(np.ndarray v1, np.ndarray v2, np.ndarray out):             # <<<<<<<<<<<<<<
@@ -1789,11 +1789,11 @@ static PyObject *__pyx_pf_9cpp_funcs_13cross_product_c_cross(CYTHON_UNUSED PyObj
   return __pyx_r;
 }
 
-/* "cpp_funcs/cross_product.pyx":33
+/* "cpp_funcs/cross_product.pyx":30
  * 
  * 
- * def c_dot(np.ndarray v1, np.ndarray v2):             # <<<<<<<<<<<<<<
- * 	cdef int N=v2.shape[0]
+ * def c_dot(np.ndarray v1, np.ndarray v2, int N):             # <<<<<<<<<<<<<<
+ * 	#cdef int N=v2.shape[0]
  * 
  */
 
@@ -1803,16 +1803,19 @@ static PyMethodDef __pyx_mdef_9cpp_funcs_13cross_product_3c_dot = {"c_dot", (PyC
 static PyObject *__pyx_pw_9cpp_funcs_13cross_product_3c_dot(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_v1 = 0;
   PyArrayObject *__pyx_v_v2 = 0;
+  int __pyx_v_N;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("c_dot (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_v1,&__pyx_n_s_v2,0};
-    PyObject* values[2] = {0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_v1,&__pyx_n_s_v2,&__pyx_n_s_N,0};
+    PyObject* values[3] = {0,0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
         case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
         CYTHON_FALLTHROUGH;
         case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
@@ -1829,32 +1832,40 @@ static PyObject *__pyx_pw_9cpp_funcs_13cross_product_3c_dot(PyObject *__pyx_self
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_v2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("c_dot", 1, 2, 2, 1); __PYX_ERR(0, 33, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("c_dot", 1, 3, 3, 1); __PYX_ERR(0, 30, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  2:
+        if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_N)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("c_dot", 1, 3, 3, 2); __PYX_ERR(0, 30, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "c_dot") < 0)) __PYX_ERR(0, 33, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "c_dot") < 0)) __PYX_ERR(0, 30, __pyx_L3_error)
       }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+      values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
     }
     __pyx_v_v1 = ((PyArrayObject *)values[0]);
     __pyx_v_v2 = ((PyArrayObject *)values[1]);
+    __pyx_v_N = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_N == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 30, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("c_dot", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 33, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("c_dot", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 30, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("cpp_funcs.cross_product.c_dot", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_v1), __pyx_ptype_5numpy_ndarray, 1, "v1", 0))) __PYX_ERR(0, 33, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_v2), __pyx_ptype_5numpy_ndarray, 1, "v2", 0))) __PYX_ERR(0, 33, __pyx_L1_error)
-  __pyx_r = __pyx_pf_9cpp_funcs_13cross_product_2c_dot(__pyx_self, __pyx_v_v1, __pyx_v_v2);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_v1), __pyx_ptype_5numpy_ndarray, 1, "v1", 0))) __PYX_ERR(0, 30, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_v2), __pyx_ptype_5numpy_ndarray, 1, "v2", 0))) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_r = __pyx_pf_9cpp_funcs_13cross_product_2c_dot(__pyx_self, __pyx_v_v1, __pyx_v_v2, __pyx_v_N);
 
   /* function exit code */
   goto __pyx_L0;
@@ -1865,8 +1876,7 @@ static PyObject *__pyx_pw_9cpp_funcs_13cross_product_3c_dot(PyObject *__pyx_self
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9cpp_funcs_13cross_product_2c_dot(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_v1, PyArrayObject *__pyx_v_v2) {
-  int __pyx_v_N;
+static PyObject *__pyx_pf_9cpp_funcs_13cross_product_2c_dot(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_v1, PyArrayObject *__pyx_v_v2, int __pyx_v_N) {
   void *__pyx_v_v1_ptr;
   void *__pyx_v_v2_ptr;
   PyObject *__pyx_r = NULL;
@@ -1875,17 +1885,8 @@ static PyObject *__pyx_pf_9cpp_funcs_13cross_product_2c_dot(CYTHON_UNUSED PyObje
   PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannySetupContext("c_dot", 0);
 
-  /* "cpp_funcs/cross_product.pyx":34
- * 
- * def c_dot(np.ndarray v1, np.ndarray v2):
- * 	cdef int N=v2.shape[0]             # <<<<<<<<<<<<<<
- * 
- * 	cdef void * v1_ptr=np.PyArray_DATA(v1)
- */
-  __pyx_v_N = (__pyx_v_v2->dimensions[0]);
-
-  /* "cpp_funcs/cross_product.pyx":36
- * 	cdef int N=v2.shape[0]
+  /* "cpp_funcs/cross_product.pyx":33
+ * 	#cdef int N=v2.shape[0]
  * 
  * 	cdef void * v1_ptr=np.PyArray_DATA(v1)             # <<<<<<<<<<<<<<
  * 	cdef void * v2_ptr=np.PyArray_DATA(v2)
@@ -1893,7 +1894,7 @@ static PyObject *__pyx_pf_9cpp_funcs_13cross_product_2c_dot(CYTHON_UNUSED PyObje
  */
   __pyx_v_v1_ptr = PyArray_DATA(__pyx_v_v1);
 
-  /* "cpp_funcs/cross_product.pyx":37
+  /* "cpp_funcs/cross_product.pyx":34
  * 
  * 	cdef void * v1_ptr=np.PyArray_DATA(v1)
  * 	cdef void * v2_ptr=np.PyArray_DATA(v2)             # <<<<<<<<<<<<<<
@@ -1902,7 +1903,7 @@ static PyObject *__pyx_pf_9cpp_funcs_13cross_product_2c_dot(CYTHON_UNUSED PyObje
  */
   __pyx_v_v2_ptr = PyArray_DATA(__pyx_v_v2);
 
-  /* "cpp_funcs/cross_product.pyx":39
+  /* "cpp_funcs/cross_product.pyx":36
  * 	cdef void * v2_ptr=np.PyArray_DATA(v2)
  * 
  * 	return c_dot_product(< const np.complex128_t *> v1_ptr, < const np.complex128_t *> v2_ptr, N)             # <<<<<<<<<<<<<<
@@ -1911,17 +1912,17 @@ static PyObject *__pyx_pf_9cpp_funcs_13cross_product_2c_dot(CYTHON_UNUSED PyObje
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = c_dot_product(((__pyx_t_double_complex const *)__pyx_v_v1_ptr), ((__pyx_t_double_complex const *)__pyx_v_v2_ptr), __pyx_v_N);
-  __pyx_t_2 = __pyx_PyComplex_FromComplex(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 39, __pyx_L1_error)
+  __pyx_t_2 = __pyx_PyComplex_FromComplex(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 36, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "cpp_funcs/cross_product.pyx":33
+  /* "cpp_funcs/cross_product.pyx":30
  * 
  * 
- * def c_dot(np.ndarray v1, np.ndarray v2):             # <<<<<<<<<<<<<<
- * 	cdef int N=v2.shape[0]
+ * def c_dot(np.ndarray v1, np.ndarray v2, int N):             # <<<<<<<<<<<<<<
+ * 	#cdef int N=v2.shape[0]
  * 
  */
 
@@ -4540,29 +4541,29 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__7);
   __Pyx_GIVEREF(__pyx_tuple__7);
 
-  /* "cpp_funcs/cross_product.pyx":22
+  /* "cpp_funcs/cross_product.pyx":19
  * 
  * 
  * def c_cross(np.ndarray v1, np.ndarray v2, np.ndarray out):             # <<<<<<<<<<<<<<
  * 	# create void pinters
  * 	# cast pointers with angle brackets to <npy> to datatype
  */
-  __pyx_tuple__8 = PyTuple_Pack(6, __pyx_n_s_v1, __pyx_n_s_v2, __pyx_n_s_out, __pyx_n_s_v1_ptr, __pyx_n_s_v2_ptr, __pyx_n_s_out_ptr); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_tuple__8 = PyTuple_Pack(6, __pyx_n_s_v1, __pyx_n_s_v2, __pyx_n_s_out, __pyx_n_s_v1_ptr, __pyx_n_s_v2_ptr, __pyx_n_s_out_ptr); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__8);
   __Pyx_GIVEREF(__pyx_tuple__8);
-  __pyx_codeobj__9 = (PyObject*)__Pyx_PyCode_New(3, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__8, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cross_product_pyx, __pyx_n_s_c_cross, 22, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__9)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_codeobj__9 = (PyObject*)__Pyx_PyCode_New(3, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__8, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cross_product_pyx, __pyx_n_s_c_cross, 19, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__9)) __PYX_ERR(0, 19, __pyx_L1_error)
 
-  /* "cpp_funcs/cross_product.pyx":33
+  /* "cpp_funcs/cross_product.pyx":30
  * 
  * 
- * def c_dot(np.ndarray v1, np.ndarray v2):             # <<<<<<<<<<<<<<
- * 	cdef int N=v2.shape[0]
+ * def c_dot(np.ndarray v1, np.ndarray v2, int N):             # <<<<<<<<<<<<<<
+ * 	#cdef int N=v2.shape[0]
  * 
  */
-  __pyx_tuple__10 = PyTuple_Pack(5, __pyx_n_s_v1, __pyx_n_s_v2, __pyx_n_s_N, __pyx_n_s_v1_ptr, __pyx_n_s_v2_ptr); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_tuple__10 = PyTuple_Pack(5, __pyx_n_s_v1, __pyx_n_s_v2, __pyx_n_s_N, __pyx_n_s_v1_ptr, __pyx_n_s_v2_ptr); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__10);
   __Pyx_GIVEREF(__pyx_tuple__10);
-  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(2, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cross_product_pyx, __pyx_n_s_c_dot, 33, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cross_product_pyx, __pyx_n_s_c_dot, 30, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -4866,28 +4867,28 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "cpp_funcs/cross_product.pyx":22
+  /* "cpp_funcs/cross_product.pyx":19
  * 
  * 
  * def c_cross(np.ndarray v1, np.ndarray v2, np.ndarray out):             # <<<<<<<<<<<<<<
  * 	# create void pinters
  * 	# cast pointers with angle brackets to <npy> to datatype
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_9cpp_funcs_13cross_product_1c_cross, NULL, __pyx_n_s_cpp_funcs_cross_product); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_9cpp_funcs_13cross_product_1c_cross, NULL, __pyx_n_s_cpp_funcs_cross_product); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_c_cross, __pyx_t_1) < 0) __PYX_ERR(0, 22, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_c_cross, __pyx_t_1) < 0) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cpp_funcs/cross_product.pyx":33
+  /* "cpp_funcs/cross_product.pyx":30
  * 
  * 
- * def c_dot(np.ndarray v1, np.ndarray v2):             # <<<<<<<<<<<<<<
- * 	cdef int N=v2.shape[0]
+ * def c_dot(np.ndarray v1, np.ndarray v2, int N):             # <<<<<<<<<<<<<<
+ * 	#cdef int N=v2.shape[0]
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_9cpp_funcs_13cross_product_3c_dot, NULL, __pyx_n_s_cpp_funcs_cross_product); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_9cpp_funcs_13cross_product_3c_dot, NULL, __pyx_n_s_cpp_funcs_cross_product); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_c_dot, __pyx_t_1) < 0) __PYX_ERR(0, 33, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_c_dot, __pyx_t_1) < 0) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "cpp_funcs/cross_product.pyx":1
@@ -6024,6 +6025,28 @@ bad:
     Py_XDECREF(py_frame);
 }
 
+/* CIntFromPyVerify */
+#define __PYX_VERIFY_RETURN_INT(target_type, func_type, func_value)\
+    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 0)
+#define __PYX_VERIFY_RETURN_INT_EXC(target_type, func_type, func_value)\
+    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 1)
+#define __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, exc)\
+    {\
+        func_type value = func_value;\
+        if (sizeof(target_type) < sizeof(func_type)) {\
+            if (unlikely(value != (func_type) (target_type) value)) {\
+                func_type zero = 0;\
+                if (exc && unlikely(value == (func_type)-1 && PyErr_Occurred()))\
+                    return (target_type) -1;\
+                if (is_unsigned && unlikely(value < zero))\
+                    goto raise_neg_overflow;\
+                else\
+                    goto raise_overflow;\
+            }\
+        }\
+        return (target_type) value;\
+    }
+
 /* Declarations */
 #if CYTHON_CCOMPLEX
   #ifdef __cplusplus
@@ -6364,28 +6387,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
                                      little, !is_unsigned);
     }
 }
-
-/* CIntFromPyVerify */
-#define __PYX_VERIFY_RETURN_INT(target_type, func_type, func_value)\
-    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 0)
-#define __PYX_VERIFY_RETURN_INT_EXC(target_type, func_type, func_value)\
-    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 1)
-#define __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, exc)\
-    {\
-        func_type value = func_value;\
-        if (sizeof(target_type) < sizeof(func_type)) {\
-            if (unlikely(value != (func_type) (target_type) value)) {\
-                func_type zero = 0;\
-                if (exc && unlikely(value == (func_type)-1 && PyErr_Occurred()))\
-                    return (target_type) -1;\
-                if (is_unsigned && unlikely(value < zero))\
-                    goto raise_neg_overflow;\
-                else\
-                    goto raise_overflow;\
-            }\
-        }\
-        return (target_type) value;\
-    }
 
 /* CIntToPy */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_enum__NPY_TYPES(enum NPY_TYPES value) {

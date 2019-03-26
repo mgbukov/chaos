@@ -89,6 +89,7 @@ def EOM(t,V,Ns,gamma):
 
 	sigma_expt     = gamma*expectation(V[:Ns],V[:Ns])
 	sigma_expt_lin = 2.0*gamma*expectation(V[Ns+3:2*Ns+3],V[:Ns]).real
+
 	
 	# evolve quantum state vector
 	V_dot[:Ns] = 1.0/hbar*H._hamiltonian__SO(t,V[:Ns],V_dot[:Ns]) # -1j*H(t)*|psi>
@@ -180,12 +181,13 @@ for j,V in enumerate(V_t):
 		measure_times[0]=0.0
 		last_time=0.0
 	elif j%skip_steps==0: 
-		#n=np.linalg.norm(S_lin)
-		n=np.linalg.norm(lin)			
+		n=np.linalg.norm(S_lin)
+		#n=np.linalg.norm(lin)			
 		#norm*=n
 		#lyap_exp[k] = np.log(norm) /(1.0*time[j])
 		lyap_exp[k] = (lyap_exp[k-1]*measure_times[k-1] + np.log(n) )/time[j]
 		measure_times[k]=time[j]
+
 		# normalize state: affects the ODE solver state
 		S_lin/=n
 		k+=1
